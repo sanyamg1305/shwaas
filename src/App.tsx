@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar, ActiveTab } from './components/common/Navbar';
 import { EmergencyModal } from './components/common/EmergencyModal';
 import { AQISection } from './components/aqi/AQISection';
@@ -8,11 +8,17 @@ import { PulmonologistFinder } from './components/pulmonologist/PulmonologistFin
 import { DoctorFollowups } from './components/followups/DoctorFollowups';
 import { InhalerGuide } from './components/inhaler/InhalerGuide';
 import { MedicationTracker } from './components/medication/MedicationTracker';
+import { detectUserLocation } from './services/locationService';
 import { HeartPulse, ShieldAlert, Sparkles, Wind } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<ActiveTab>('aqi');
   const [emergencyModalOpen, setEmergencyModalOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    // Proactively detect user location on startup
+    detectUserLocation(false).catch(() => {});
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800">

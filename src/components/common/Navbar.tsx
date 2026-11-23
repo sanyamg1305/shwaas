@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Wind, 
   ClipboardCheck, 
@@ -15,6 +15,7 @@ import {
   ChevronRight,
   Phone
 } from 'lucide-react';
+import { getSavedLocation, UserLocation } from '../../services/locationService';
 
 export type ActiveTab = 'breathing' | 'aqi' | 'symptoms' | 'inhaler' | 'medication' | 'followups' | 'pulmonologist';
 
@@ -26,6 +27,15 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onOpenEmergency }) => {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+  const [currentLocation, setCurrentLocation] = useState<UserLocation | null>(() => getSavedLocation());
+
+  useEffect(() => {
+    const handleLoc = (e: any) => {
+      if (e.detail) setCurrentLocation(e.detail);
+    };
+    window.addEventListener('shwaas_location_updated', handleLoc);
+    return () => window.removeEventListener('shwaas_location_updated', handleLoc);
+  }, []);
 
   const navItems: { id: ActiveTab; label: string; shortLabel: string; icon: React.ReactNode }[] = [
     { id: 'breathing', label: 'Breathing Exercises', shortLabel: 'Breathing', icon: <Activity className="w-4 h-4" /> },
@@ -34,7 +44,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onOpenE
     { id: 'inhaler', label: 'Inhaler Guide', shortLabel: 'Inhaler', icon: <Info className="w-4 h-4" /> },
     { id: 'medication', label: 'Medications', shortLabel: 'Meds', icon: <Pill className="w-4 h-4" /> },
     { id: 'followups', label: 'Doctor Follow-Ups', shortLabel: 'Visits', icon: <Calendar className="w-4 h-4" /> },
-    { id: 'pulmonologist', label: 'Sion 400022 Doctors', shortLabel: 'Doctors', icon: <MapPin className="w-4 h-4" /> },
+    { id: 'pulmonologist', label: 'Find Pulmonologist', shortLabel: 'Doctors', icon: <MapPin className="w-4 h-4" /> },
   ];
 
   // Mobile bottom bar items (5 primary tabs)
@@ -80,9 +90,25 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onOpenE
                     COPD
                   </span>
                 </div>
-                <span className="text-[10px] text-slate-400 font-medium -mt-0.5 hidden xs:block">
-                  Sion 400022, Mumbai
-                </span>
+                <div 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleSelectTab('aqi');
+                  }}
+                  className="flex items-center gap-1 text-[10px] text-slate-500 font-medium -mt-0.5 hover:text-teal-700 cursor-pointer"
+                  title="Click to view air quality or change location"
+                >
+                  <MapPin className="w-2.5 h-2.5 text-teal-600 shrink-0" />
+                  <span className="truncate max-w-[120px] sm:max-w-[160px]">
+                    {currentLocation?.city ? `${currentLocation.city}${currentLocation.postalCode ? ' ' + currentLocation.postalCode : ''}` : 'Detecting GPS...'}
+                  </span>
+                  {currentLocation?.source === 'gps' && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" title="High-accuracy GPS active" />
+                  )}
+                  {currentLocation?.source === 'ip' && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" title="IP location detected" />
+                  )}
+                </div>
               </div>
             </div>
 

@@ -17,6 +17,12 @@ import {
 import { AQIData, GeocodingResult } from '../../types/aqi';
 import { fetchLiveAQI, searchCities } from '../../services/aqiService';
 import { SION_MUMBAI_COORDS } from '../../services/pulmonologistService';
+import { 
+  detectUserLocation, 
+  getSavedLocation, 
+  saveUserLocation, 
+  UserLocation 
+} from '../../services/locationService';
 
 export const AQISection: React.FC = () => {
   const [aqiData, setAqiData] = useState<AQIData | null>(null);
@@ -25,6 +31,7 @@ export const AQISection: React.FC = () => {
   const [cityResults, setCityResults] = useState<GeocodingResult[]>([]);
   const [searching, setSearching] = useState<boolean>(false);
   const [locationStatus, setLocationStatus] = useState<string>('');
+  const [activeLocation, setActiveLocation] = useState<UserLocation | null>(null);
 
   const loadLocationAQI = async (lat: number, lon: number, cityName: string) => {
     setLoading(true);
@@ -41,32 +48,41 @@ export const AQISection: React.FC = () => {
     }
   };
 
-  const handleUseCurrentLocation = () => {
-    if (!navigator.geolocation) {
-      setLocationStatus('Geolocation is not supported by your browser.');
-      return;
-    }
-
-    setLocationStatus('Acquiring your GPS location...');
+  const handleUseCurrentLocation = async (forceFresh: boolean = false) => {
+    setLocationStatus('Acquiring high-accuracy GPS coordinates...');
     setLoading(true);
 
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        const { latitude, longitude } = position.coords;
-        await loadLocationAQI(latitude, longitude, 'Your Current Location');
-      },
-      (error) => {
-        console.warn('Geolocation error:', error);
-        setLocationStatus('Location access denied or timed out. Loaded Mumbai (Sion 400022).');
-        loadLocationAQI(SION_MUMBAI_COORDS.lat, SION_MUMBAI_COORDS.lon, 'Mumbai (Sion 400022), Maharashtra');
-      },
-      { timeout: 7000 }
-    );
+    try {
+      const loc = await detectUserLocation(forceFresh);
+      setActiveLocation(loc);
+      setLocationStatus(loc.source === 'gps' ? 'Live GPS Location Acquired' : 'Auto-detected via IP');
+      await loadLocationAQI(loc.latitude, loc.longitude, loc.displayName);
+    } catch (error) {
+      console.warn('Geolocation detection error:', error);
+      setLocationStatus('Location access failed. Loaded Mumbai (Sion 400022).');
+      loadLocationAQI(SION_MUMBAI_COORDS.lat, SION_MUMBAI_COORDS.lon, 'Mumbai (Sion 400022), Maharashtra');
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    // Default to Sion, Mumbai 400022 or user geolocation
-    handleUseCurrentLocation();
+    const saved = getSavedLocation();
+    if (saved) {
+      setActiveLocation(saved);
+      loadLocationAQI(saved.latitude, saved.longitude, saved.displayName);
+    } else {
+      handleUseCurrentLocation(false);
+    }
+
+    const handleLocationUpdate = (e: any) => {
+      if (e.detail) {
+        setActiveLocation(e.detail);
+        loadLocationAQI(e.detail.latitude, e.detail.longitude, e.detail.displayName);
+      }
+    };
+    window.addEventListener('shwaas_location_updated', handleLocationUpdate);
+    return () => window.removeEventListener('shwaas_location_updated', handleLocationUpdate);
   }, []);
 
   // Handle city search debounce
@@ -89,7 +105,34 @@ export const AQISection: React.FC = () => {
     const displayName = `${city.name}${city.admin1 ? ', ' + city.admin1 : ''}, ${city.country}`;
     setSearchQuery('');
     setCityResults([]);
+    const loc: UserLocation = {
+      latitude: city.latitude,
+      longitude: city.longitude,
+      city: city.name,
+      state: city.admin1,
+      country: city.country,
+      displayName,
+      source: 'manual',
+      timestamp: Date.now(),
+    };
+    saveUserLocation(loc);
+    setActiveLocation(loc);
     loadLocationAQI(city.latitude, city.longitude, displayName);
+  };
+
+  const handleSelectPopularCity = (c: { name: string; lat: number; lon: number }) => {
+    const loc: UserLocation = {
+      latitude: c.lat,
+      longitude: c.lon,
+      city: c.name.split('(')[0].trim(),
+      country: 'India',
+      displayName: c.name,
+      source: 'manual',
+      timestamp: Date.now(),
+    };
+    saveUserLocation(loc);
+    setActiveLocation(loc);
+    loadLocationAQI(c.lat, c.lon, c.name);
   };
 
   // Popular Indian cities
@@ -173,7 +216,7 @@ export const AQISection: React.FC = () => {
           </div>
 
           <button
-            onClick={handleUseCurrentLocation}
+            onClick={() => handleUseCurrentLocation(true)}
             className="flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-teal-400 hover:bg-teal-300 active:scale-95 text-slate-950 font-black text-xs sm:text-sm transition-all shadow-md shrink-0"
           >
             <MapPin className="w-4 h-4" />
@@ -187,7 +230,7 @@ export const AQISection: React.FC = () => {
           {popularCities.map((c) => (
             <button
               key={c.name}
-              onClick={() => loadLocationAQI(c.lat, c.lon, c.name)}
+              onClick={() => handleSelectPopularCity(c)}
               className="whitespace-nowrap px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium transition-colors border border-white/10 text-[11px]"
             >
               {c.name}
