@@ -44,8 +44,8 @@ export const App: React.FC = () => {
       <footer className="bg-white border-t border-slate-200 mt-12 py-8 text-xs text-slate-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-lg bg-teal-600 text-white flex items-center justify-center font-black text-xs">
-              <HeartPulse className="w-3.5 h-3.5" />
+            <div className="w-7 h-7 rounded-lg overflow-hidden border border-slate-200">
+              <img src="/logo.jpeg" alt="Shwaas Logo" className="w-full h-full object-cover" />
             </div>
             <span className="font-extrabold text-slate-800 text-sm">Shwaas COPD Companion</span>
             <span>— Empowering Respiratory Health</span>

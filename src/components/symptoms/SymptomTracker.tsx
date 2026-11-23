@@ -30,7 +30,12 @@ export const SymptomTracker: React.FC = () => {
 
   useEffect(() => {
     const savedName = storage.getPatientName();
-    if (savedName) setPatientName(savedName);
+    if (savedName && savedName !== 'Ramesh Sharma') {
+      setPatientName(savedName);
+    } else {
+      setPatientName('');
+      storage.setPatientName('');
+    }
 
     const now = new Date();
     setTodayDate(now.toLocaleDateString([], {
@@ -208,7 +213,7 @@ export const SymptomTracker: React.FC = () => {
                   type="text"
                   value={patientName}
                   onChange={(e) => handleNameChange(e.target.value)}
-                  placeholder="Enter patient full name..."
+                  placeholder="Enter your name (optional)..."
                   className="w-full max-w-md px-3.5 py-2 text-sm rounded-xl bg-slate-50 border border-slate-200 text-slate-900 font-semibold focus:outline-none focus:ring-2 focus:ring-teal-400"
                 />
               </div>
@@ -260,18 +265,23 @@ export const SymptomTracker: React.FC = () => {
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
                     
                     {/* Left Anchor (0) */}
-                    <div className="lg:col-span-4 flex items-center gap-2.5">
-                      <span className="w-5 h-5 rounded-full bg-slate-200 text-slate-700 text-xs font-bold flex items-center justify-center shrink-0">
+                    <div className="lg:col-span-4 flex items-start gap-2.5">
+                      <span className="w-5 h-5 rounded-full bg-slate-200 text-slate-700 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
                         {index + 1}
                       </span>
-                      <p className="text-xs sm:text-sm font-semibold text-slate-800 leading-snug">
-                        {q.leftAnchor}
-                      </p>
+                      <div>
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 block lg:hidden">
+                          Score 0 (Better):
+                        </span>
+                        <p className="text-xs sm:text-sm font-semibold text-slate-800 leading-snug">
+                          {q.leftAnchor}
+                        </p>
+                      </div>
                     </div>
 
                     {/* Middle Score Blocks (0 1 2 3 4 5) */}
-                    <div className="lg:col-span-4 flex items-center justify-center">
-                      <div className="grid grid-cols-6 gap-1 sm:gap-2 w-full max-w-xs">
+                    <div className="lg:col-span-4 flex items-center justify-center py-1 lg:py-0">
+                      <div className="grid grid-cols-6 gap-1.5 sm:gap-2 w-full max-w-xs">
                         {[0, 1, 2, 3, 4, 5].map((score) => {
                           const isSelected = currentScore === score;
                           return (
@@ -279,7 +289,7 @@ export const SymptomTracker: React.FC = () => {
                               key={score}
                               type="button"
                               onClick={() => handleSelectScore(q.id, score)}
-                              className={`h-10 sm:h-11 rounded-xl font-black text-sm transition-all border flex items-center justify-center ${
+                              className={`h-10 sm:h-11 rounded-xl font-black text-sm transition-all border flex items-center justify-center active:scale-95 ${
                                 isSelected
                                   ? 'bg-teal-600 text-white border-teal-600 shadow-md ring-2 ring-teal-300 scale-105'
                                   : 'bg-white hover:bg-slate-100 text-slate-700 border-slate-300'
@@ -294,6 +304,9 @@ export const SymptomTracker: React.FC = () => {
 
                     {/* Right Anchor (5) */}
                     <div className="lg:col-span-3 text-left lg:text-right">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-rose-700 block lg:hidden">
+                        Score 5 (Worst):
+                      </span>
                       <p className="text-xs sm:text-sm font-semibold text-slate-800 leading-snug">
                         {q.rightAnchor}
                       </p>

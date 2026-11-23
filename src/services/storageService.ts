@@ -151,7 +151,6 @@ export const DUMMY_APPOINTMENTS: DoctorAppointment[] = [
 export const DUMMY_SYMPTOM_LOGS: SymptomLogEntry[] = [
   {
     id: 'cat-log-1',
-    patientName: 'Ramesh Sharma',
     date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
     answers: {
       'cat-1-cough': 2,
@@ -172,7 +171,6 @@ export const DUMMY_SYMPTOM_LOGS: SymptomLogEntry[] = [
   },
   {
     id: 'cat-log-2',
-    patientName: 'Ramesh Sharma',
     date: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
     answers: {
       'cat-1-cough': 3,
@@ -193,7 +191,6 @@ export const DUMMY_SYMPTOM_LOGS: SymptomLogEntry[] = [
   },
   {
     id: 'cat-log-3',
-    patientName: 'Ramesh Sharma',
     date: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString(),
     answers: {
       'cat-1-cough': 1,
@@ -214,7 +211,6 @@ export const DUMMY_SYMPTOM_LOGS: SymptomLogEntry[] = [
   },
   {
     id: 'cat-log-4',
-    patientName: 'Ramesh Sharma',
     date: new Date(Date.now() - 19 * 24 * 60 * 60 * 1000).toISOString(),
     answers: {
       'cat-1-cough': 4,
