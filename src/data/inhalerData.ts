@@ -79,6 +79,8 @@ export const INHALER_GUIDES: InhalerGuideData[] = [
     description: 'Pocket-sized aerosol canister that releases a measured puff of medicine when pressed.',
     recommendedFor: 'Rescue situations when a spacer is temporarily unavailable.',
     keyRule: 'Start breathing in slowly JUST BEFORE pressing the canister.',
+    youtubeId: '2i9_DelNqs4',
+    videoUrl: 'https://youtu.be/2i9_DelNqs4?si=0s-WKr0l-jKpMg0X',
     steps: [
       {
         stepNumber: 1,

@@ -20,6 +20,8 @@ export interface InhalerGuideData {
   description: string;
   recommendedFor: string;
   keyRule: string;
+  youtubeId?: string;
+  videoUrl?: string;
   steps: InhalerStep[];
   commonMistakes: string[];
   cleaningAdvice: string;
