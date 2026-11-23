@@ -13,11 +13,12 @@ import {
   HeartPulse,
   Stethoscope,
   ChevronRight,
-  Phone
+  Phone,
+  ShieldCheck
 } from 'lucide-react';
 import { getSavedLocation, UserLocation } from '../../services/locationService';
 
-export type ActiveTab = 'breathing' | 'aqi' | 'symptoms' | 'inhaler' | 'medication' | 'followups' | 'pulmonologist';
+export type ActiveTab = 'breathing' | 'aqi' | 'symptoms' | 'inhaler' | 'medication' | 'followups' | 'pulmonologist' | 'privacy';
 
 interface NavbarProps {
   activeTab: ActiveTab;
@@ -186,6 +187,24 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onOpenE
                 </button>
               );
             })}
+
+            {/* Privacy Policy Link in Drawer */}
+            <div className="pt-2 mt-2 border-t border-slate-100">
+              <button
+                onClick={() => handleSelectTab('privacy')}
+                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
+                  activeTab === 'privacy'
+                    ? 'bg-teal-50 text-teal-900 border border-teal-200'
+                    : 'text-slate-600 hover:bg-slate-50'
+                }`}
+              >
+                <div className="flex items-center gap-2.5">
+                  <ShieldCheck className={`w-4 h-4 ${activeTab === 'privacy' ? 'text-teal-600' : 'text-slate-400'}`} />
+                  <span>Privacy Policy & Data Security</span>
+                </div>
+                <ChevronRight className="w-4 h-4 text-slate-300" />
+              </button>
+            </div>
           </div>
         )}
       </header>
