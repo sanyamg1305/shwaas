@@ -93,7 +93,7 @@ export const PulmonologistFinder: React.FC = () => {
       name: newDocName.trim(),
       clinicName: newDocClinic.trim() || 'Pulmonology Care',
       address: newDocAddress.trim() || 'Local Clinic',
-      phone: newDocPhone.trim() || '+1-555-RESP',
+      phone: newDocPhone.trim() || '+91 22 2407 6381',
       notes: newDocNotes.trim(),
       isSaved: true,
       rating: 5.0,
@@ -371,7 +371,7 @@ export const PulmonologistFinder: React.FC = () => {
                   type="text"
                   value={newDocName}
                   onChange={(e) => setNewDocName(e.target.value)}
-                  placeholder="e.g. Dr. Robert Vance, MD"
+                  placeholder="e.g. Dr. Rajesh Sharma, MD (Pulmonary)"
                   className="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 border border-slate-200 text-slate-800 focus:outline-none focus:ring-2 focus:ring-teal-400"
                 />
               </div>
@@ -382,7 +382,7 @@ export const PulmonologistFinder: React.FC = () => {
                   type="text"
                   value={newDocClinic}
                   onChange={(e) => setNewDocClinic(e.target.value)}
-                  placeholder="e.g. City Chest Hospital, Suite 300"
+                  placeholder="e.g. Sion Chest Clinic / Somaiya Ayurvihar"
                   className="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 border border-slate-200 text-slate-800 focus:outline-none focus:ring-2 focus:ring-teal-400"
                 />
               </div>
@@ -393,7 +393,7 @@ export const PulmonologistFinder: React.FC = () => {
                   type="text"
                   value={newDocPhone}
                   onChange={(e) => setNewDocPhone(e.target.value)}
-                  placeholder="e.g. +1 (555) 019-2831"
+                  placeholder="e.g. +91 22 2407 6381 or +91 98200 12345"
                   className="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 border border-slate-200 text-slate-800 focus:outline-none focus:ring-2 focus:ring-teal-400"
                 />
               </div>
@@ -404,7 +404,7 @@ export const PulmonologistFinder: React.FC = () => {
                   type="text"
                   value={newDocAddress}
                   onChange={(e) => setNewDocAddress(e.target.value)}
-                  placeholder="e.g. 450 Medical Arts Parkway, Boston MA"
+                  placeholder="e.g. Sulochana Shetty Marg, Sion West, Mumbai 400022"
                   className="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 border border-slate-200 text-slate-800 focus:outline-none focus:ring-2 focus:ring-teal-400"
                 />
               </div>

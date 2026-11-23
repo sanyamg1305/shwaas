@@ -419,7 +419,7 @@ export const MedicationTracker: React.FC = () => {
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="e.g. Trelegy Ellipta or Spiriva"
+                  placeholder="e.g. Foracort 200, Asthalin, or Tiova Rotacaps"
                   className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-800 focus:outline-none focus:ring-2 focus:ring-teal-400"
                 />
               </div>

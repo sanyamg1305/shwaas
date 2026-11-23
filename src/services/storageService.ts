@@ -371,9 +371,9 @@ export const storage = {
   // Patient Name
   getPatientName: (): string => {
     try {
-      return localStorage.getItem(STORAGE_KEYS.PATIENT_NAME) || 'Ramesh Sharma';
+      return localStorage.getItem(STORAGE_KEYS.PATIENT_NAME) || '';
     } catch {
-      return 'Ramesh Sharma';
+      return '';
     }
   },
   setPatientName: (name: string) => {
@@ -582,7 +582,7 @@ export const storage = {
 
   // Reset / Reload all dummy data helper
   reloadAllDummyData: () => {
-    localStorage.setItem(STORAGE_KEYS.PATIENT_NAME, 'Ramesh Sharma');
+    localStorage.setItem(STORAGE_KEYS.PATIENT_NAME, '');
     localStorage.setItem(STORAGE_KEYS.DOCTOR_APPOINTMENTS, JSON.stringify(DUMMY_APPOINTMENTS));
     localStorage.setItem(STORAGE_KEYS.SYMPTOM_LOGS, JSON.stringify(DUMMY_SYMPTOM_LOGS));
     localStorage.setItem(STORAGE_KEYS.SAVED_PULMONOLOGISTS, JSON.stringify(DUMMY_SAVED_PULMONOLOGISTS));

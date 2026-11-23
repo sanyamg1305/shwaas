@@ -415,7 +415,7 @@ export const DoctorFollowups: React.FC = () => {
                   type="text"
                   value={doctorName}
                   onChange={(e) => setDoctorName(e.target.value)}
-                  placeholder="e.g. Dr. Jennifer Adams"
+                  placeholder="e.g. Dr. Zarir Udwadia / Dr. Sanjeev Mehta"
                   className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-800 focus:outline-none focus:ring-2 focus:ring-teal-400"
                 />
               </div>
@@ -427,7 +427,7 @@ export const DoctorFollowups: React.FC = () => {
                     type="text"
                     value={clinicName}
                     onChange={(e) => setClinicName(e.target.value)}
-                    placeholder="e.g. North Respiratory Institute"
+                    placeholder="e.g. Sion Hospital LTMMC (OPD 14) / Hinduja"
                     className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-800 focus:outline-none focus:ring-2 focus:ring-teal-400"
                   />
                 </div>
@@ -485,7 +485,7 @@ export const DoctorFollowups: React.FC = () => {
                 <textarea
                   value={doctorAdviceNotes}
                   onChange={(e) => setDoctorAdviceNotes(e.target.value)}
-                  placeholder="e.g. Continue tiotropium in morning. Use spacer for albuterol. Return in 3 months with daily symptom log."
+                  placeholder="e.g. Continue Tiova Rotacaps in morning. Use Zerostat spacer for Foracort/Asthalin. Return in 3 months with daily CAT score log."
                   rows={3}
                   className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-800 focus:outline-none focus:ring-2 focus:ring-teal-400"
                 />
