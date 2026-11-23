@@ -122,35 +122,35 @@ export const BreathingExercises: React.FC = () => {
     }
   };
 
-  // Visual breathing animation styles
+  // Visual breathing animation styles with controlled scale boundaries
   const getCircleStyles = () => {
     const phase = currentPattern.phase;
     if (phase === 'Inhale') {
       return {
-        scale: 'scale-115 sm:scale-125 duration-1000',
+        scale: 'scale-110 duration-1000',
         bg: 'bg-gradient-to-tr from-teal-500 to-cyan-400',
-        ring: 'ring-teal-200/80 ring-8 shadow-teal-500/30',
+        ring: 'ring-teal-200/80 ring-6 sm:ring-8 shadow-teal-500/25',
         label: 'Inhale through nose',
       };
     } else if (phase === 'Exhale') {
       return {
-        scale: 'scale-90 sm:scale-95 duration-1000',
+        scale: 'scale-90 duration-1000',
         bg: 'bg-gradient-to-tr from-cyan-600 to-teal-800',
-        ring: 'ring-cyan-200/60 ring-8 shadow-cyan-600/30',
+        ring: 'ring-cyan-200/60 ring-6 sm:ring-8 shadow-cyan-600/25',
         label: 'Exhale through pursed lips',
       };
     } else if (phase === 'Hold') {
       return {
-        scale: 'scale-110 sm:scale-120 duration-300',
+        scale: 'scale-105 duration-300',
         bg: 'bg-gradient-to-tr from-amber-500 to-yellow-400',
-        ring: 'ring-amber-200/80 ring-8 shadow-amber-500/30',
+        ring: 'ring-amber-200/80 ring-6 sm:ring-8 shadow-amber-500/25',
         label: 'Hold gently',
       };
     } else {
       return {
         scale: 'scale-95 duration-500',
         bg: 'bg-gradient-to-tr from-slate-400 to-slate-500',
-        ring: 'ring-slate-200 ring-8',
+        ring: 'ring-slate-200 ring-6 sm:ring-8',
         label: 'Rest & Recover',
       };
     }
@@ -235,28 +235,30 @@ export const BreathingExercises: React.FC = () => {
           </div>
         </div>
 
-        {/* Central Animated Breathing Circle */}
-        <div className="my-auto py-5 sm:py-7 flex flex-col items-center justify-center">
-          <div className="relative flex items-center justify-center">
+        {/* Central Animated Breathing Circle Area with Safe Margin */}
+        <div className="w-full flex flex-col items-center justify-center my-2 sm:my-4">
+          <div className="relative flex items-center justify-center h-52 sm:h-64 w-full">
             <div 
-              className={`w-44 h-44 sm:w-56 sm:h-56 rounded-full flex flex-col items-center justify-center text-white text-center shadow-2xl transition-all ease-in-out ${circleStyle.ring} ${circleStyle.bg} ${circleStyle.scale}`}
+              className={`w-40 h-40 sm:w-48 sm:h-48 rounded-full flex flex-col items-center justify-center text-white text-center shadow-xl transition-all ease-in-out ${circleStyle.ring} ${circleStyle.bg} ${circleStyle.scale}`}
             >
-              <span className="text-[11px] font-black uppercase tracking-widest text-white/90">
+              <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-widest text-white/90">
                 {currentPattern.phase}
               </span>
-              <span className="text-5xl sm:text-6xl font-black tracking-tight my-0.5 drop-shadow-sm">
+              <span className="text-4xl sm:text-5xl font-black tracking-tight my-0.5 drop-shadow-sm">
                 {secondsRemainingInStep}s
               </span>
-              <span className="text-[11px] font-semibold max-w-[140px] sm:max-w-[160px] text-white/95 px-2 leading-tight">
+              <span className="text-[10px] sm:text-[11px] font-semibold max-w-[130px] sm:max-w-[150px] text-white/95 px-2 leading-tight">
                 {circleStyle.label}
               </span>
             </div>
           </div>
 
-          {/* Active Phase Instruction */}
-          <p className="mt-5 text-center text-xs sm:text-sm font-semibold text-slate-700 max-w-sm px-4 leading-relaxed">
-            "{currentPattern.instruction}"
-          </p>
+          {/* Active Phase Instruction Card - Safely spaced below */}
+          <div className="mt-3 px-4 py-2 sm:py-2.5 rounded-2xl bg-slate-50 border border-slate-200/80 text-center max-w-sm sm:max-w-md shadow-2xs">
+            <p className="text-xs sm:text-sm font-semibold text-slate-700 leading-snug">
+              "{currentPattern.instruction}"
+            </p>
+          </div>
         </div>
 
         {/* Bottom Pacing Controls */}
