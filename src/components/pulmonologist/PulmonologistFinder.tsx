@@ -25,8 +25,11 @@ import {
 import { 
   detectUserLocation, 
   getSavedLocation, 
+  saveUserLocation,
   UserLocation 
 } from '../../services/locationService';
+import { searchCities } from '../../services/aqiService';
+import { GeocodingResult } from '../../types/aqi';
 import { storage } from '../../services/storageService';
 
 export const PulmonologistFinder: React.FC = () => {
@@ -37,6 +40,11 @@ export const PulmonologistFinder: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'nearby' | 'saved'>('nearby');
   const [statusMsg, setStatusMsg] = useState<string>('');
   
+  // City Search
+  const [citySearchQuery, setCitySearchQuery] = useState<string>('');
+  const [citySearchResults, setCitySearchResults] = useState<GeocodingResult[]>([]);
+  const [searchingCities, setSearchingCities] = useState<boolean>(false);
+
   // Add Doctor Modal
   const [showAddModal, setShowAddModal] = useState<boolean>(false);
   const [newDocName, setNewDocName] = useState<string>('');
@@ -96,6 +104,71 @@ export const PulmonologistFinder: React.FC = () => {
     window.addEventListener('shwaas_location_updated', handleLocationUpdate);
     return () => window.removeEventListener('shwaas_location_updated', handleLocationUpdate);
   }, []);
+
+  // Debounced City Search
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      if (citySearchQuery.trim().length >= 2) {
+        setSearchingCities(true);
+        const results = await searchCities(citySearchQuery);
+        setCitySearchResults(results);
+        setSearchingCities(false);
+      } else {
+        setCitySearchResults([]);
+      }
+    }, 350);
+
+    return () => clearTimeout(timer);
+  }, [citySearchQuery]);
+
+  const handleSelectCity = (city: GeocodingResult) => {
+    const displayName = `${city.name}${city.admin1 ? ', ' + city.admin1 : ''}, ${city.country}`;
+    setCitySearchQuery('');
+    setCitySearchResults([]);
+    const loc: UserLocation = {
+      latitude: city.latitude,
+      longitude: city.longitude,
+      city: city.name,
+      state: city.admin1,
+      country: city.country,
+      displayName,
+      source: 'manual',
+      timestamp: Date.now(),
+    };
+    saveUserLocation(loc);
+    loadDoctorsForLocation(loc);
+  };
+
+  const handleSelectPopularCity = (name: string, lat: number, lon: number) => {
+    const loc: UserLocation = {
+      latitude: lat,
+      longitude: lon,
+      city: name.split('(')[0].trim(),
+      country: 'India',
+      displayName: name,
+      source: 'manual',
+      timestamp: Date.now(),
+    };
+    saveUserLocation(loc);
+    loadDoctorsForLocation(loc);
+  };
+
+  const popularCities = [
+    { name: 'Rajkot', lat: 22.3039, lon: 70.8022 },
+    { name: 'Mumbai', lat: 19.0434, lon: 72.8634 },
+    { name: 'Ahmedabad', lat: 23.0225, lon: 72.5714 },
+    { name: 'Surat', lat: 21.1702, lon: 72.8311 },
+    { name: 'Vadodara', lat: 22.3072, lon: 73.1812 },
+    { name: 'Delhi (NCR)', lat: 28.6139, lon: 77.209 },
+    { name: 'Bengaluru', lat: 12.9716, lon: 77.5946 },
+    { name: 'Pune', lat: 18.5204, lon: 73.8567 },
+    { name: 'Kolkata', lat: 22.5726, lon: 88.3639 },
+    { name: 'Hyderabad', lat: 17.3850, lon: 78.4867 },
+    { name: 'Chennai', lat: 13.0827, lon: 80.2707 },
+    { name: 'Jaipur', lat: 26.9124, lon: 75.7873 },
+    { name: 'Lucknow', lat: 26.8467, lon: 80.9462 },
+    { name: 'Indore', lat: 22.7196, lon: 75.8577 },
+  ];
 
   const handleToggleSave = (doc: Pulmonologist) => {
     const isSaved = savedDoctors.some(d => d.id === doc.id);
@@ -184,6 +257,62 @@ export const PulmonologistFinder: React.FC = () => {
             <Plus className="w-4 h-4" />
             <span>Add My Doctor</span>
           </button>
+        </div>
+      </div>
+
+      {/* City Search & Quick Select Filter */}
+      <div className="bg-white rounded-2xl p-4 border border-slate-200 shadow-2xs space-y-3">
+        <div className="relative">
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <input
+            type="text"
+            value={citySearchQuery}
+            onChange={(e) => setCitySearchQuery(e.target.value)}
+            placeholder="Search any Indian city, district, or PIN code to find specialists..."
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-800 placeholder:text-slate-400 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-teal-400"
+          />
+          {searchingCities && (
+            <RefreshCw className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 animate-spin" />
+          )}
+
+          {/* Autocomplete Dropdown */}
+          {citySearchResults.length > 0 && (
+            <div className="absolute left-0 right-0 top-full mt-2 bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden z-30 divide-y divide-slate-100">
+              {citySearchResults.map((city) => (
+                <button
+                  key={`${city.id}-${city.latitude}`}
+                  onClick={() => handleSelectCity(city)}
+                  className="w-full text-left px-4 py-2.5 text-slate-800 hover:bg-teal-50 flex items-center justify-between text-xs sm:text-sm transition-colors font-medium"
+                >
+                  <span>
+                    {city.name}{city.admin1 ? `, ${city.admin1}` : ''}
+                  </span>
+                  <span className="text-xs text-slate-400">{city.country}</span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Popular Cities Horizontal Scroller */}
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5 text-xs">
+          <span className="text-slate-400 font-bold whitespace-nowrap text-[11px] mr-1">Quick Cities:</span>
+          {popularCities.map((c) => {
+            const isSelected = (userLocation?.city || '').toLowerCase().includes(c.name.toLowerCase().split(' ')[0]);
+            return (
+              <button
+                key={c.name}
+                onClick={() => handleSelectPopularCity(c.name, c.lat, c.lon)}
+                className={`whitespace-nowrap px-3 py-1 rounded-xl text-xs font-semibold transition-all border ${
+                  isSelected
+                    ? 'bg-teal-700 text-white border-teal-700 shadow-2xs'
+                    : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
+                }`}
+              >
+                {c.name}
+              </button>
+            );
+          })}
         </div>
       </div>
 
