@@ -13,7 +13,8 @@ import {
   X,
   Activity,
   HelpCircle,
-  Share2
+  Share2,
+  RotateCcw
 } from 'lucide-react';
 import { DoctorAppointment } from '../../types/doctor';
 import { storage } from '../../services/storageService';
@@ -112,13 +113,27 @@ export const DoctorFollowups: React.FC = () => {
           </p>
         </div>
 
-        <button
-          onClick={() => setShowAddModal(true)}
-          className="flex items-center gap-2 px-5 py-3 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs sm:text-sm font-bold shadow-md transition-colors shrink-0"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Record New Follow-Up</span>
-        </button>
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            onClick={() => {
+              storage.reloadAllDummyData();
+              setAppointments(storage.getDoctorAppointments());
+            }}
+            className="flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold border border-slate-200 transition-colors"
+            title="Populate realistic Mumbai pulmonology records"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Load Sample Data</span>
+          </button>
+
+          <button
+            onClick={() => setShowAddModal(true)}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs sm:text-sm font-bold shadow-md transition-colors shrink-0"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Record New Follow-Up</span>
+          </button>
+        </div>
       </div>
 
       {/* Tabs */}
@@ -157,13 +172,25 @@ export const DoctorFollowups: React.FC = () => {
               <Calendar className="w-12 h-12 mx-auto text-slate-300 mb-2" />
               <p className="text-sm font-bold text-slate-700">No upcoming appointments scheduled.</p>
               <p className="text-xs mt-1">Routine 3 to 6-month pulmonology reviews are vital for optimal COPD control.</p>
-              <button
-                onClick={() => setShowAddModal(true)}
-                className="mt-4 inline-flex items-center gap-1.5 px-4 py-2 bg-teal-600 text-white rounded-xl text-xs font-bold shadow-sm"
-              >
-                <Plus className="w-3.5 h-3.5" />
-                <span>Schedule Next Appointment</span>
-              </button>
+              <div className="mt-4 flex items-center justify-center gap-2">
+                <button
+                  onClick={() => {
+                    storage.reloadAllDummyData();
+                    setAppointments(storage.getDoctorAppointments());
+                  }}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-50 border border-teal-200 text-teal-800 rounded-xl text-xs font-bold shadow-2xs hover:bg-teal-100"
+                >
+                  <RotateCcw className="w-3.5 h-3.5 text-teal-600" />
+                  <span>Load Sample Mumbai Appointments</span>
+                </button>
+                <button
+                  onClick={() => setShowAddModal(true)}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-600 text-white rounded-xl text-xs font-bold shadow-sm hover:bg-teal-700"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Schedule Appointment</span>
+                </button>
+              </div>
             </div>
           ) : (
             upcomingAppts.map((appt) => {

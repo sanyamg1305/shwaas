@@ -56,8 +56,8 @@ export const AQISection: React.FC = () => {
       },
       (error) => {
         console.warn('Geolocation error:', error);
-        setLocationStatus('Location access was denied or timed out. Loaded default city.');
-        loadLocationAQI(40.7128, -74.006, 'New York, USA');
+        setLocationStatus('Location access was denied or timed out. Loaded Mumbai (Sion 400022).');
+        loadLocationAQI(19.0434, 72.8634, 'Mumbai (Sion 400022), Maharashtra');
       },
       { timeout: 8000 }
     );
@@ -91,14 +91,16 @@ export const AQISection: React.FC = () => {
     loadLocationAQI(city.latitude, city.longitude, displayName);
   };
 
-  // Popular quick cities
+  // Popular Indian cities
   const popularCities = [
-    { name: 'New York', lat: 40.7128, lon: -74.006 },
-    { name: 'London', lat: 51.5074, lon: -0.1278 },
-    { name: 'Delhi', lat: 28.6139, lon: 77.209 },
-    { name: 'Los Angeles', lat: 34.0522, lon: -118.2437 },
-    { name: 'Chicago', lat: 41.8781, lon: -87.6298 },
-    { name: 'Toronto', lat: 43.6532, lon: -79.3832 },
+    { name: 'Mumbai (Sion 400022)', lat: 19.0434, lon: 72.8634 },
+    { name: 'Delhi (NCR)', lat: 28.6139, lon: 77.209 },
+    { name: 'Bengaluru', lat: 12.9716, lon: 77.5946 },
+    { name: 'Pune', lat: 18.5204, lon: 73.8567 },
+    { name: 'Kolkata', lat: 22.5726, lon: 88.3639 },
+    { name: 'Ahmedabad', lat: 23.0225, lon: 72.5714 },
+    { name: 'Chennai', lat: 13.0827, lon: 80.2707 },
+    { name: 'Hyderabad', lat: 17.3850, lon: 78.4867 },
   ];
 
   return (

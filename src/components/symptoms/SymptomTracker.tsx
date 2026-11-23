@@ -171,6 +171,19 @@ export const SymptomTracker: React.FC = () => {
           </div>
 
           <button
+            onClick={() => {
+              storage.reloadAllDummyData();
+              setLogs(storage.getSymptomLogs());
+              setPatientName(storage.getPatientName());
+            }}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold border border-slate-200 transition-colors shadow-2xs"
+            title="Populate sample assessments"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Sample Data</span>
+          </button>
+
+          <button
             onClick={() => window.print()}
             className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 text-xs font-bold border border-slate-200 transition-colors shadow-2xs"
             title="Print assessment form"

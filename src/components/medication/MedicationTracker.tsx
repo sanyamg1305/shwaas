@@ -167,13 +167,28 @@ export const MedicationTracker: React.FC = () => {
           </p>
         </div>
 
-        <button
-          onClick={() => setShowAddModal(true)}
-          className="flex items-center gap-2 px-5 py-3 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs sm:text-sm font-bold shadow-md transition-colors shrink-0"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Add New Medication</span>
-        </button>
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            onClick={() => {
+              storage.reloadAllDummyData();
+              setMedications(storage.getMedications());
+              setDoseLogs(storage.getMedicationLogs());
+            }}
+            className="flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold border border-slate-200 transition-colors"
+            title="Populate standard Indian COPD medicines"
+          >
+            <RotateCw className="w-3.5 h-3.5" />
+            <span>Load Sample Meds</span>
+          </button>
+
+          <button
+            onClick={() => setShowAddModal(true)}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs sm:text-sm font-bold shadow-md transition-colors shrink-0"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Add New Medication</span>
+          </button>
+        </div>
       </div>
 
       {/* Quick Rescue Inhaler Bar (Critical for COPD patients during flare-up) */}

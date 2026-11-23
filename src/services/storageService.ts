@@ -12,6 +12,7 @@ const STORAGE_KEYS = {
   MEDICATIONS: 'shwaas_medications',
   MEDICATION_LOGS: 'shwaas_medication_logs',
   BREATHING_LOGS: 'shwaas_breathing_logs',
+  SEEDED_FLAG: 'shwaas_indian_seeded_v2',
 };
 
 // Official COPD Assessment Test™ (CAT) Questions from user document
@@ -74,79 +75,79 @@ export const OFFICIAL_CAT_QUESTIONS: CATQuestion[] = [
   },
 ];
 
-// Rich clinical dummy data for Doctor Appointments & Follow-ups
+// Rich Indian dummy data for Doctor Appointments & Follow-ups in Mumbai (Near 400022)
 export const DUMMY_APPOINTMENTS: DoctorAppointment[] = [
   {
-    id: 'appt-1',
-    doctorName: 'Dr. Sarah Jenkins, MD, FCCP',
-    clinicName: 'Metro Pulmonary & Sleep Specialists, Suite 400',
-    phone: '+1 (555) 234-5678',
-    dateTime: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000).toISOString(), // 4 days from now
+    id: 'appt-mumbai-1',
+    doctorName: 'Dr. Zarir Udwadia, MD, FRCP, FCCP',
+    clinicName: 'P.D. Hinduja National Hospital & Medical Research Centre (Mahim West)',
+    phone: '+91 22 2445 1515',
+    dateTime: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000).toISOString(), // 5 days from now at 10:30 AM
     visitType: 'Routine 3-Month Checkup',
     status: 'Scheduled',
     questionsForDoctor: [
-      'Should I continue using a spacer with my morning Spiriva inhaler?',
-      'My morning cough produces light yellow phlegm—do we need antibiotics or just hydration?',
-      'Is my resting blood oxygen (SpO2 93-94%) safe during light walking exercises?',
-      'Am I due for an updated pneumonia or influenza vaccination booster?'
+      'Should I continue using the Cipla Zerostat VT spacer with my Foracort inhaler?',
+      'My morning cough produces light yellow phlegm—do we need antibiotics or just hydration and steam?',
+      'Is my resting blood oxygen (SpO2 94%) safe during light evening walks in Shivaji Park / Sion Fort garden?',
+      'Am I due for an updated Pneumococcal (Prevnar 20) and annual influenza booster vaccine?'
     ],
-    doctorAdviceNotes: 'Please bring your daily CAT symptom log and remaining inhaler puff counts.',
+    doctorAdviceNotes: 'Please carry your past CAT survey score sheet and both inhalers (Foracort & Asthalin) to demonstrate inhalation technique.',
   },
   {
-    id: 'appt-2',
-    doctorName: 'Dr. Michael Chen, MD',
-    clinicName: 'Chest Diagnostic & Pulmonary Rehabilitation Institute',
-    phone: '+1 (555) 876-5432',
-    dateTime: new Date(Date.now() + 16 * 24 * 60 * 60 * 1000 + 4 * 60 * 60 * 1000).toISOString(), // 16 days from now
+    id: 'appt-mumbai-2',
+    doctorName: 'Dr. Sanjeev Mehta, MD (Chest & Respiratory Diseases)',
+    clinicName: 'S.L. Raheja Hospital - Fortis Associate (Mahim/Sion Link Rd)',
+    phone: '+91 22 6652 9999',
+    dateTime: new Date(Date.now() + 18 * 24 * 60 * 60 * 1000 + 4 * 60 * 60 * 1000).toISOString(), // 18 days from now
     visitType: 'Spirometry Test',
     status: 'Scheduled',
     questionsForDoctor: [
-      'Will this spirometry test determine if my FEV1 has stabilized since starting dual bronchodilator therapy?',
-      'Can we test post-bronchodilator reversibility?'
+      'Will this spirometry test determine whether my FEV1 has improved since starting Tiova Rotacaps?',
+      'Can we evaluate post-bronchodilator reversibility?'
     ],
   },
   {
-    id: 'appt-3',
-    doctorName: 'Dr. Sarah Jenkins, MD, FCCP',
-    clinicName: 'Metro Pulmonary & Sleep Specialists',
-    phone: '+1 (555) 234-5678',
+    id: 'appt-mumbai-3',
+    doctorName: 'Department of Pulmonary Medicine (OPD)',
+    clinicName: 'Lokmanya Tilak Municipal General Hospital (Sion Hospital, Mumbai 400022)',
+    phone: '+91 22 2407 6381',
     dateTime: new Date(Date.now() - 32 * 24 * 60 * 60 * 1000).toISOString(), // 32 days ago
     visitType: 'Medication Review',
     status: 'Completed',
     questionsForDoctor: [
-      'Adjusting daily controller inhaler schedule',
-      'Proper mouth rinsing technique to prevent hoarseness'
+      'Rinsing mouth after steroid inhaler to prevent oral thrush',
+      'Handling high particulate matter (PM2.5) during Mumbai winter smog'
     ],
     spirometry: {
-      fev1Percent: 58,
-      fev1FvcRatio: 0.63,
+      fev1Percent: 57,
+      fev1FvcRatio: 0.62,
       spo2Percent: 94,
     },
-    doctorAdviceNotes: 'Lungs clear bilaterally with mild expiratory wheezing at bases. Good response to LAMA/LABA dual therapy. Emphasized daily pursed-lip breathing exercises and avoiding cold air exposure.',
-    prescribedChanges: 'Maintained Tiotropium (Spiriva) 2 puffs in morning. Albuterol as rescue.',
-    nextFollowupDate: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000).toISOString(),
+    doctorAdviceNotes: 'Bilateral vesicular breath sounds with mild basal rhonchi. Advised daily Pursed-Lip and Diaphragmatic breathing (Shwaas exercises 1.1 & 2.1). Maintained Foracort 200 twice daily with Zerostat spacer. Carry Asthalin rescue inhaler at all times.',
+    prescribedChanges: 'Maintained Foracort 200 (Formoterol + Budesonide) 2 puffs BID. Asthalin 100mcg PRN for acute breathlessness.',
+    nextFollowupDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
   },
   {
-    id: 'appt-4',
-    doctorName: 'Dr. Sarah Jenkins, MD, FCCP',
-    clinicName: 'Metro Pulmonary & Sleep Specialists',
-    phone: '+1 (555) 234-5678',
-    dateTime: new Date(Date.now() - 110 * 24 * 60 * 60 * 1000).toISOString(), // 110 days ago
+    id: 'appt-mumbai-4',
+    doctorName: 'K.J. Somaiya Medical College & Hospital (Chest Dept)',
+    clinicName: 'Somaiya Ayurvihar Complex (Sion East, Mumbai 400022)',
+    phone: '+91 22 5095 4700',
+    dateTime: new Date(Date.now() - 105 * 24 * 60 * 60 * 1000).toISOString(), // 105 days ago
     visitType: 'Symptom Flare-up / Exacerbation',
     status: 'Completed',
     questionsForDoctor: [
-      'Increased breathlessness following viral chest cold',
-      'Need for short oral steroid course'
+      'Acute wheezing following sudden climate change in Mumbai monsoon',
+      'Need for nebulization or oral corticosteroids'
     ],
     spirometry: {
-      fev1Percent: 52,
-      spo2Percent: 91,
+      fev1Percent: 51,
+      spo2Percent: 92,
     },
-    doctorAdviceNotes: 'Acute mild COPD exacerbation post-viral URI. Prescribed 5-day course oral prednisolone and increased rescue albuterol nebulization every 6 hours. Follow-up showed complete resolution within 10 days.',
+    doctorAdviceNotes: 'Mild COPD exacerbation secondary to viral bronchial infection. Responded well to 5-day oral Deflazacort 6mg course and Duolin nebulization. Patient counselled on avoiding damp monsoon environments and early warning signs.',
   }
 ];
 
-// Rich dummy CAT symptom logs
+// Rich Indian dummy CAT symptom logs
 export const DUMMY_SYMPTOM_LOGS: SymptomLogEntry[] = [
   {
     id: 'cat-log-1',
@@ -165,8 +166,8 @@ export const DUMMY_SYMPTOM_LOGS: SymptomLogEntry[] = [
     totalScore: 14,
     maxPossibleScore: 40,
     severityLevel: 'Medium Impact',
-    clinicalAdvice: 'COPD is one of the main health issues you face. Breathlessness affects some activities. Review adherence to maintenance therapy and practice daily pursed-lip breathing.',
-    notes: 'Morning breathlessness on stairs, but felt better after pursed-lip breathing and morning inhaler.',
+    clinicalAdvice: 'COPD is having a moderate impact. Breathlessness is noticeable when climbing Sion station foot-over-bridge. Good adherence to Foracort inhaler and morning pursed-lip breathing.',
+    notes: 'Climbing stairs at Sion station caused mild breathlessness. Settled within 3 minutes using forward-leaning posture.',
     rescuePuffsUsedToday: 1,
   },
   {
@@ -186,14 +187,14 @@ export const DUMMY_SYMPTOM_LOGS: SymptomLogEntry[] = [
     totalScore: 23,
     maxPossibleScore: 40,
     severityLevel: 'High Impact',
-    clinicalAdvice: 'COPD stops you from doing many things you want to do. Frequent cough and phlegm. Discuss potential treatment adjustment or pulmonary rehabilitation with your pulmonologist.',
-    notes: 'High dust & smog in the city triggered persistent coughing and chest tightness. Took 3 rescue puffs.',
-    rescuePuffsUsedToday: 3,
+    clinicalAdvice: 'High impact score. High PM2.5 levels along Eastern Express Highway triggered persistent coughing. Avoid morning outdoor walks on smoggy days; wear an N95 mask.',
+    notes: 'Heavy vehicle dust along Sion-Bandra link road. Chest tightness in evening; took 2 puffs of Asthalin rescue inhaler.',
+    rescuePuffsUsedToday: 2,
   },
   {
     id: 'cat-log-3',
     patientName: 'Ramesh Sharma',
-    date: new Date(Date.now() - 9 * 24 * 60 * 60 * 1000).toISOString(),
+    date: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString(),
     answers: {
       'cat-1-cough': 1,
       'cat-2-phlegm': 1,
@@ -207,14 +208,14 @@ export const DUMMY_SYMPTOM_LOGS: SymptomLogEntry[] = [
     totalScore: 9,
     maxPossibleScore: 40,
     severityLevel: 'Low Impact',
-    clinicalAdvice: 'COPD has a low impact on your daily life. Most days are good. Continue your regular maintenance inhalers and stay physically active.',
-    notes: 'Very clear day. Completed 15 minutes of diaphragmatic breathing and walked around garden comfortably.',
+    clinicalAdvice: 'Excellent control today! Clean sea breeze and low air pollution index. Continue regular maintenance inhalers.',
+    notes: 'Pleasant morning air. Completed 10 minutes of diaphragmatic breathing without any shortness of breath.',
     rescuePuffsUsedToday: 0,
   },
   {
     id: 'cat-log-4',
     patientName: 'Ramesh Sharma',
-    date: new Date(Date.now() - 18 * 24 * 60 * 60 * 1000).toISOString(),
+    date: new Date(Date.now() - 19 * 24 * 60 * 60 * 1000).toISOString(),
     answers: {
       'cat-1-cough': 4,
       'cat-2-phlegm': 4,
@@ -228,114 +229,114 @@ export const DUMMY_SYMPTOM_LOGS: SymptomLogEntry[] = [
     totalScore: 31,
     maxPossibleScore: 40,
     severityLevel: 'Very High Impact',
-    clinicalAdvice: 'COPD severely restricts your life. Very high risk of flare-ups (exacerbations). Consult your pulmonary doctor promptly to evaluate your medication regimen and action plan.',
-    notes: 'Acute flare-up episode. High wheezing and fatigue. Contacted Dr. Jenkins clinic triage line.',
-    rescuePuffsUsedToday: 5,
+    clinicalAdvice: 'Acute symptom spike. Yellow-zone flare-up. Contacted Dr. Udwadia’s Hinduja clinic triage and took prescribed rescue doses.',
+    notes: 'Exacerbation episode. Persistent wheezing and thick yellow phlegm. Stayed indoors with air purifier.',
+    rescuePuffsUsedToday: 4,
   }
 ];
 
-// Rich dummy saved pulmonologists
+// Top Saved Pulmonologists in Mumbai around PIN 400022
 export const DUMMY_SAVED_PULMONOLOGISTS: Pulmonologist[] = [
   {
-    id: 'saved-doc-1',
-    name: 'Dr. Sarah Jenkins, MD, FCCP',
-    clinicName: 'Metro Pulmonary & Sleep Specialists',
-    address: 'Suite 400, 1250 Health Sciences Parkway',
-    phone: '+1 (555) 234-5678',
-    distanceKm: 2.4,
-    rating: 4.9,
-    isSaved: true,
-    notes: 'Primary Pulmonologist. Clinic hours Mon-Fri 8:30 AM - 4:30 PM. Available on emergency triage ext 3.',
-  },
-  {
-    id: 'saved-doc-2',
-    name: 'Dr. Michael Chen, MD',
-    clinicName: 'Metropolitan Chest & Lung Institute',
-    address: 'Medical Pavilion B, 880 University Boulevard',
-    phone: '+1 (555) 876-5432',
-    distanceKm: 4.8,
+    id: 'doc-sion-1',
+    name: 'Department of Pulmonary Medicine - Sion Hospital (LTMMC)',
+    clinicName: 'Lokmanya Tilak Municipal General Hospital & Medical College',
+    address: 'Sulochana Shetty Marg, Sion West, Mumbai, Maharashtra 400022',
+    phone: '+91 22 2407 6381',
+    distanceKm: 0.5,
     rating: 4.8,
+    notes: 'Primary Government Tertiary Hospital in PIN 400022. Dedicated OPD 14 (Chest Medicine), 24/7 ICU & subsidized pulmonary rehab.',
     isSaved: true,
-    notes: 'Spirometry and Pulmonary Function Testing specialist. Next spirometry scheduled in 2 weeks.',
   },
   {
-    id: 'saved-doc-3',
-    name: 'St. Jude Comprehensive Respiratory Care Center',
-    clinicName: '24/7 Pulmonary Emergency & Oxygen Care',
-    address: '500 Memorial Hospital Plaza, Emergency Wing',
-    phone: '+1 (555) 990-1122',
-    distanceKm: 8.5,
-    rating: 4.9,
+    id: 'doc-sion-3',
+    name: 'Dr. Zarir Udwadia, MD, FRCP, FCCP',
+    clinicName: 'P.D. Hinduja National Hospital & Medical Research Centre',
+    address: 'Veer Savarkar Marg, Mahim West, Mumbai 400016 (3.2 km from Sion Circle)',
+    phone: '+91 22 2445 1515',
+    distanceKm: 3.2,
+    rating: 5.0,
+    notes: 'Senior Consultant Chest Physician. Global pioneer in severe COPD, asthma, and complex pulmonary disorders.',
     isSaved: true,
-    notes: 'Nearest 24/7 ER with specialized acute respiratory care and medical oxygen reserves.',
+  },
+  {
+    id: 'doc-sion-2',
+    name: 'K.J. Somaiya Hospital & Research Centre (Chest Dept)',
+    clinicName: 'Somaiya Ayurvihar Complex',
+    address: 'Eastern Express Highway, Near Everard Nagar, Sion East, Mumbai, Maharashtra 400022',
+    phone: '+91 22 5095 4700',
+    distanceKm: 0.9,
+    rating: 4.7,
+    notes: 'Full Spirometry (PFT) suite, broncho-alveolar lavage, and multi-specialty respiratory emergency care in Sion East 400022.',
+    isSaved: true,
   }
 ];
 
-// Dummy medications
+// Standard Indian Respiratory Medications (Cipla, Sun Pharma, Lupin)
 export const DEFAULT_MEDICATIONS: Medication[] = [
   {
-    id: 'med-1',
-    name: 'Tiotropium (Spiriva Respimat)',
-    genericName: 'Long-Acting Muscarinic Antagonist (LAMA)',
+    id: 'med-in-1',
+    name: 'Foracort 200 Inhaler (Cipla)',
+    genericName: 'Formoterol Fumarate (6mcg) + Budesonide (200mcg)',
     type: 'Controller / Maintenance',
-    dosage: '2 inhalations once daily',
-    schedule: ['Morning'],
+    dosage: '2 puffs twice daily with Zerostat Spacer',
+    schedule: ['Morning', 'Evening'],
     isInhaler: true,
-    totalPuffs: 60,
-    remainingPuffs: 48,
-    refillReminderThreshold: 10,
-    notes: 'Daily maintenance; prevents flare-ups.',
+    totalPuffs: 120,
+    remainingPuffs: 86,
+    refillReminderThreshold: 20,
+    notes: 'Daily maintenance controller. Always rinse mouth with water & spit after use.',
     color: '#0d9488',
   },
   {
-    id: 'med-2',
-    name: 'Albuterol (ProAir / Ventolin)',
-    genericName: 'Short-Acting Beta-2 Agonist (SABA)',
+    id: 'med-in-2',
+    name: 'Asthalin Inhaler (Cipla)',
+    genericName: 'Salbutamol / Albuterol (100mcg)',
     type: 'Fast-Acting Rescue',
-    dosage: '1 to 2 puffs as needed for sudden shortness of breath',
+    dosage: '1 to 2 puffs immediately during acute breathlessness or wheezing',
     schedule: ['As Needed'],
     isInhaler: true,
     totalPuffs: 200,
-    remainingPuffs: 142,
-    refillReminderThreshold: 20,
-    notes: 'Always carry with you. Wait 1 min between puffs.',
+    remainingPuffs: 164,
+    refillReminderThreshold: 25,
+    notes: 'Always carry in pocket/bag. Wait 1 min between consecutive puffs.',
     color: '#ef4444',
   },
   {
-    id: 'med-3',
-    name: 'Fluticasone / Salmeterol (Advair Diskus)',
-    genericName: 'Inhaled Corticosteroid + LABA',
+    id: 'med-in-3',
+    name: 'Tiova Inhaler / Rotacaps (Cipla)',
+    genericName: 'Tiotropium Bromide (9mcg / 18mcg)',
     type: 'Controller / Maintenance',
-    dosage: '1 inhalation twice daily',
-    schedule: ['Morning', 'Evening'],
+    dosage: '2 puffs once daily in the morning',
+    schedule: ['Morning'],
     isInhaler: true,
     totalPuffs: 60,
-    remainingPuffs: 34,
+    remainingPuffs: 42,
     refillReminderThreshold: 10,
-    notes: 'Rinse mouth with water and spit out after use.',
+    notes: 'Long-Acting Muscarinic Antagonist (LAMA). Relaxes airway smooth muscles for 24 hours.',
     color: '#3b82f6',
   },
 ];
 
-// Dummy today dose logs
+// Indian today dose logs
 const todayDateStr = new Date().toISOString().split('T')[0];
 export const DUMMY_MEDICATION_LOGS: MedicationDoseLog[] = [
   {
     id: 'dose-log-1',
-    medicationId: 'med-1',
-    medicationName: 'Tiotropium (Spiriva Respimat)',
+    medicationId: 'med-in-1',
+    medicationName: 'Foracort 200 Inhaler (Cipla)',
     timeSlot: 'Morning',
     date: todayDateStr,
-    takenAt: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(),
+    takenAt: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(),
     status: 'taken',
   },
   {
     id: 'dose-log-2',
-    medicationId: 'med-3',
-    medicationName: 'Fluticasone / Salmeterol (Advair Diskus)',
+    medicationId: 'med-in-3',
+    medicationName: 'Tiova Inhaler (Cipla)',
     timeSlot: 'Morning',
     date: todayDateStr,
-    takenAt: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(),
+    takenAt: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(),
     status: 'taken',
   },
 ];
@@ -344,20 +345,33 @@ export const DUMMY_BREATHING_LOGS: BreathingSessionLog[] = [
   {
     id: 'breath-log-1',
     techniqueId: 'pursed-lip',
-    techniqueName: 'Pursed-Lip Breathing',
+    techniqueName: 'Pursed-Lip Breathing (Shwaas 2.1)',
     durationSeconds: 300,
     completedAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
   },
   {
     id: 'breath-log-2',
     techniqueId: 'diaphragmatic',
-    techniqueName: 'Diaphragmatic Breathing',
+    techniqueName: 'Diaphragmatic Breathing (Shwaas 1.1)',
     durationSeconds: 480,
     completedAt: new Date(Date.now() - 26 * 60 * 60 * 1000).toISOString(),
   },
 ];
 
 export const storage = {
+  // Ensure Indian dummy data is auto-seeded when the app opens
+  ensureIndianDataSeeded: () => {
+    try {
+      const seeded = localStorage.getItem(STORAGE_KEYS.SEEDED_FLAG);
+      if (!seeded) {
+        storage.reloadAllDummyData();
+        localStorage.setItem(STORAGE_KEYS.SEEDED_FLAG, 'true');
+      }
+    } catch {
+      // ignore
+    }
+  },
+
   // Patient Name
   getPatientName: (): string => {
     try {
@@ -383,7 +397,7 @@ export const storage = {
     localStorage.setItem(STORAGE_KEYS.CAT_QUESTIONS, JSON.stringify(questions));
   },
 
-  // Symptom Logs (populates dummy logs if empty)
+  // Symptom Logs
   getSymptomLogs: (): SymptomLogEntry[] => {
     try {
       const data = localStorage.getItem(STORAGE_KEYS.SYMPTOM_LOGS);
@@ -391,7 +405,6 @@ export const storage = {
         const parsed = JSON.parse(data);
         if (Array.isArray(parsed) && parsed.length > 0) return parsed;
       }
-      // Populate and return dummy
       localStorage.setItem(STORAGE_KEYS.SYMPTOM_LOGS, JSON.stringify(DUMMY_SYMPTOM_LOGS));
       return DUMMY_SYMPTOM_LOGS;
     } catch {
@@ -410,7 +423,7 @@ export const storage = {
     return logs;
   },
 
-  // Doctor Appointments (populates dummy appointments if empty)
+  // Doctor Appointments
   getDoctorAppointments: (): DoctorAppointment[] => {
     try {
       const data = localStorage.getItem(STORAGE_KEYS.DOCTOR_APPOINTMENTS);
@@ -444,7 +457,7 @@ export const storage = {
     return appts;
   },
 
-  // Pulmonologists (populates dummy saved docs if empty)
+  // Pulmonologists
   getSavedPulmonologists: (): Pulmonologist[] => {
     try {
       const data = localStorage.getItem(STORAGE_KEYS.SAVED_PULMONOLOGISTS);
@@ -580,5 +593,9 @@ export const storage = {
     localStorage.setItem(STORAGE_KEYS.MEDICATIONS, JSON.stringify(DEFAULT_MEDICATIONS));
     localStorage.setItem(STORAGE_KEYS.MEDICATION_LOGS, JSON.stringify(DUMMY_MEDICATION_LOGS));
     localStorage.setItem(STORAGE_KEYS.BREATHING_LOGS, JSON.stringify(DUMMY_BREATHING_LOGS));
+    localStorage.setItem(STORAGE_KEYS.SEEDED_FLAG, 'true');
   }
 };
+
+// Seed on startup
+storage.ensureIndianDataSeeded();

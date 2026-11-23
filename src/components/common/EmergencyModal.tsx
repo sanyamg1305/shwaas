@@ -78,21 +78,21 @@ export const EmergencyModal: React.FC<EmergencyModalProps> = ({ isOpen, onClose 
           </div>
         </div>
 
-        {/* Emergency Call Buttons */}
+        {/* Indian Emergency Call Buttons */}
         <div className="grid grid-cols-2 gap-3 pt-2 border-t border-slate-100">
           <a
-            href="tel:911"
-            className="flex items-center justify-center gap-2 px-4 py-3 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl shadow-md transition-colors text-center"
+            href="tel:108"
+            className="flex items-center justify-center gap-2 px-4 py-3 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl shadow-md transition-colors text-center text-xs sm:text-sm"
           >
             <PhoneCall className="w-5 h-5" />
-            <span>Call 911 (US/CAN)</span>
+            <span>Call 108 (Ambulance - MH)</span>
           </a>
           <a
             href="tel:112"
-            className="flex items-center justify-center gap-2 px-4 py-3 bg-rose-800 hover:bg-rose-900 text-white font-bold rounded-xl shadow-md transition-colors text-center"
+            className="flex items-center justify-center gap-2 px-4 py-3 bg-rose-800 hover:bg-rose-900 text-white font-bold rounded-xl shadow-md transition-colors text-center text-xs sm:text-sm"
           >
             <PhoneCall className="w-5 h-5" />
-            <span>Call 112 (EU/India)</span>
+            <span>Call 112 (National Helpline)</span>
           </a>
         </div>
 
